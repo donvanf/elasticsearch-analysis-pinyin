@@ -24,6 +24,7 @@ public class PinyinAbbreviationsTokenizerFactory extends AbstractTokenizerFactor
         config.lowercase=true;
         config.trimWhitespace=true;
         config.keepNoneChineseInFirstLetter=true;
+        config.splitFullPinYin=false;
         return new PinyinTokenizer(config);
     }
 }

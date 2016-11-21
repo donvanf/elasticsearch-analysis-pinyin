@@ -19,6 +19,7 @@ public class PinyinConfig {
     public int     LimitFirstLetterLength=16;
     public boolean keepFullPinyin=true;
     public boolean removeDuplicateTerm=false;
+    public boolean splitFullPinYin=false;
 
     public PinyinConfig() {}
     public PinyinConfig(Settings settings) {
@@ -34,5 +35,6 @@ public class PinyinConfig {
         this.trimWhitespace=settings.getAsBoolean("trim_whitespace", true);
         this.keepNoneChineseInFirstLetter =settings.getAsBoolean("keep_none_chinese_in_first_letter", true);
         this.removeDuplicateTerm =settings.getAsBoolean("remove_duplicated_term", false);
+        this.splitFullPinYin=settings.getAsBoolean("split_full_pinyin", false);
     }
 }

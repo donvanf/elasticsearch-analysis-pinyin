@@ -85,6 +85,7 @@ public class PinyinTokenFilter extends TokenFilter {
             List<String> pinyinList = Pinyin.pinyin(source);
 
             StringBuilder buff = new StringBuilder();
+            StringBuilder termFullPinYinBuff = new StringBuilder();
 
             for (int i = 0; i < source.length(); i++) {
                 char c = source.charAt(i);
@@ -116,7 +117,11 @@ public class PinyinTokenFilter extends TokenFilter {
                             candidate.add(String.valueOf(pinyin.charAt(0)));
                         }
                         if (config.keepFullPinyin) {
-                            candidate.add(pinyin);
+                            if(config.splitFullPinYin){
+                                candidate.add(pinyin);
+                            }else{
+                                termFullPinYinBuff.append(pinyin);
+                            }
                         }
                     }
                 }
@@ -125,6 +130,10 @@ public class PinyinTokenFilter extends TokenFilter {
             //clean previous temp
             if (buff.length() > 0) {
                 cleanBuff(buff);
+            }
+            if (termFullPinYinBuff.length() > 0) {
+                candidate.add(termFullPinYinBuff.toString());
+                termFullPinYinBuff.setLength(0);
             }
         }
 
