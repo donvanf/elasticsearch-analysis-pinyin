@@ -136,17 +136,20 @@ public class PinyinTokenizer extends Tokenizer {
                         if (buff.length() > 0) {
                             buffSize = parseBuff(buff, buffSize);
                         }
+                        try{
+                            String pinyin = pinyinList.get(i);
+                            if (pinyin != null && pinyin.length() > 0) {
 
-                        String pinyin = pinyinList.get(i);
-                        if (pinyin != null && pinyin.length() > 0) {
-
-                            firstLetters.append(pinyin.charAt(0));
-                            if (config.keepSeparateFirstLetter & pinyin.length() > 1) {
-                                addCandidate(new TermItem(String.valueOf(pinyin.charAt(0)), i, i + 1));
+                                firstLetters.append(pinyin.charAt(0));
+                                if (config.keepSeparateFirstLetter & pinyin.length() > 1) {
+                                    addCandidate(new TermItem(String.valueOf(pinyin.charAt(0)), i, i + 1));
+                                }
+                                if (config.keepFullPinyin) {
+                                    addCandidate(new TermItem(pinyin, i, i + 1));
+                                }
                             }
-                            if (config.keepFullPinyin) {
-                                addCandidate(new TermItem(pinyin, i, i + 1));
-                            }
+                        } catch(Exception e) {
+                            System.out.println("unrecongnized pinyin chars:" + String.valueOf(c));
                         }
                     }
                 }

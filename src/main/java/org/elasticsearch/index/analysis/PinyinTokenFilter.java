@@ -108,22 +108,26 @@ public class PinyinTokenFilter extends TokenFilter {
                     if (buff.length() > 0) {
                         cleanBuff(buff);
                     }
+                    try{
+                        String pinyin = pinyinList.get(i);
+                        if (pinyin != null && pinyin.length() > 0) {
 
-                    String pinyin = pinyinList.get(i);
-                    if (pinyin != null && pinyin.length() > 0) {
-
-                        firstLetters.append(pinyin.charAt(0));
-                        if (config.keepSeparateFirstLetter & pinyin.length() > 1) {
-                            candidate.add(String.valueOf(pinyin.charAt(0)));
-                        }
-                        if (config.keepFullPinyin) {
-                            if(config.splitFullPinYin){
-                                candidate.add(pinyin);
-                            }else{
-                                termFullPinYinBuff.append(pinyin);
+                            firstLetters.append(pinyin.charAt(0));
+                            if (config.keepSeparateFirstLetter & pinyin.length() > 1) {
+                                candidate.add(String.valueOf(pinyin.charAt(0)));
+                            }
+                            if (config.keepFullPinyin) {
+                                if(config.splitFullPinYin){
+                                    candidate.add(pinyin);
+                                }else{
+                                    termFullPinYinBuff.append(pinyin);
+                                }
                             }
                         }
+                    }catch(Exception e){
+                        System.out.println("unrecongnized pinyin chars:" + String.valueOf(c));
                     }
+                    
                 }
             }
 
